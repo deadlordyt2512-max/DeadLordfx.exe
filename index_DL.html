@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050914">
+<title>DEADLORD OS | Test.exe</title>
+<style>
+:root{color-scheme:dark;--bg:#050914;--panel:#0b1426;--line:#1b4d86;--blue:#26a7ff;--cyan:#7de7ff;--text:#edf6ff;--muted:#9bb3ce;--wrong:#ff667d;--right:#5cf0b0}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -15%,#10366a 0%,transparent 48%),var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{width:min(900px,100%);margin:auto;padding:24px 16px 56px}
+header{padding:25px 0 20px;text-align:center}
+.kicker{letter-spacing:.24em;color:var(--cyan);font-size:.75rem;font-weight:800}
+h1{font-size:clamp(2rem,7vw,3.5rem);line-height:1.04;margin:12px 0;color:#fff;text-shadow:0 0 22px #178fff80}
+h1 span{color:var(--blue)}
+.subtitle{color:var(--muted);max-width:620px;margin:0 auto}
+.status{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.pill{border:1px solid #23578b;background:#091a31;color:#bceaff;border-radius:999px;padding:5px 11px;font-size:.78rem}
+.intro,.question,.result{background:linear-gradient(145deg,#0c192c,#080f1d);border:1px solid #17385b;border-radius:16px;box-shadow:0 10px 35px #0003}
+.intro{padding:16px 18px;margin:18px 0 20px;color:#c9d9eb}
+.progress-wrap{height:7px;background:#15263c;border-radius:20px;overflow:hidden;margin:12px 0 22px}
+#progress{height:100%;width:0;background:linear-gradient(90deg,#1478ff,#63e4ff);transition:width .2s}
+.question{padding:18px;margin:14px 0}
+.qtop{display:flex;align-items:center;gap:10px;color:var(--cyan);font-size:.78rem;font-weight:800;letter-spacing:.08em}
+.num{display:grid;place-items:center;width:30px;height:30px;border:1px solid #2778ba;border-radius:8px;background:#0c2543}
+h2{font-size:1.08rem;line-height:1.4;margin:12px 0 15px}
+.answers{display:grid;gap:9px}
+.answer{display:flex;align-items:flex-start;gap:11px;padding:12px;border:1px solid #233c59;border-radius:10px;background:#091323;cursor:pointer;transition:border-color .15s,background .15s}
+.answer:hover{border-color:#398ed2;background:#0d2038}
+.answer:has(input:checked){border-color:var(--blue);background:#0d2947}
+.answer input{margin-top:5px;accent-color:#29a9ff;flex-shrink:0}
+.answer span{flex:1}
+.feedback{display:none;margin-top:12px;padding:10px 12px;border-radius:9px;font-size:.92rem}
+.question.correct{border-color:#237c61}
+.question.correct .feedback{display:block;background:#0b2b27;color:#a8ffe0}
+.question.incorrect{border-color:#8a3447}
+.question.incorrect .feedback{display:block;background:#311521;color:#ffc0cb}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+button{border:0;border-radius:10px;padding:13px 18px;font-weight:800;font-size:.95rem;cursor:pointer}
+.primary{background:linear-gradient(100deg,#0878ff,#23c9ff);color:#03101e;flex:1}
+.secondary{background:#111f32;border:1px solid #2a4867;color:#d5e9ff}
+button:disabled{opacity:.5;cursor:not-allowed}
+.result{display:none;padding:22px;margin-top:20px;text-align:center}
+.result.show{display:block}
+.score{font-size:clamp(2.4rem,8vw,4rem);font-weight:900;color:var(--cyan);line-height:1.2}
+#resultText{color:#c5d9ee}
+footer{text-align:center;color:#6e8ba9;font-size:.8rem;margin-top:28px}
+@media(min-width:700px){.answers{grid-template-columns:1fr 1fr}.question{padding:22px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="kicker">DEADLORD OS // ARCHIVO DE CONOCIMIENTO</div>
+  <h1>DEADLORD <span>OS</span><br>TEST.EXE</h1>
+  <p class="subtitle">Evaluación centrada exclusivamente en Dead Lord.</p>
+  <div class="status"><span class="pill">7 PREGUNTAS</span><span class="pill">MODO EVALUACIÓN</span><span class="pill">ARCHIVOS CLASIFICADOS PROTEGIDOS</span></div>
+</header>
+<section class="intro">
+  <strong>INSTRUCCIONES DEL SISTEMA</strong><br>
+  Selecciona una respuesta por pregunta. Al terminar, pulsa <em>Evaluar cuestionario</em> para ver tu puntuación y las explicaciones. Este test trata únicamente sobre DL; no incluye preguntas de otros personajes ni de la KingFlyer.
+</section>
+<div aria-label="Progreso del cuestionario" class="progress-wrap"><div id="progress"></div></div>
+<div id="progressLabel" style="color:var(--muted);font-size:.85rem;margin-top:-14px;margin-bottom:14px">0 de 7 respondidas</div>
+<form id="quiz">
+<div class="question" data-answer="B" data-explanation="Antes de ser conocido como Dead Lord, su nombre era Sergio.">
+<div class="qtop"><span class="num">01</span> IDENTIDAD</div><h2>¿Cuál era el nombre de DL antes de convertirse en Dead Lord?</h2>
+<div class="answers">
+<label class="answer"><input type="radio" name="q1" value="A"><span>Sebastián</span></label>
+<label class="answer"><input type="radio" name="q1" value="B"><span>Sergio</span></label>
+<label class="answer"><input type="radio" name="q1" value="C"><span>Milker</span></label>
+<label class="answer"><input type="radio" name="q1" value="D"><span>Sensei</span></label>
+</div><div class="feedback"></div></div>
+
+<div class="question" data-answer="C" data-explanation="Su transformación se relaciona con su sistema y con lo que fue aprendiendo sobre sus poderes.">
+<div class="qtop"><span class="num">02</span> ORIGEN</div><h2>¿Qué está relacionado con la manera en que Sergio llegó a convertirse en DL?</h2>
+<div class="answers">
+<label class="answer"><input type="radio" name="q2" value="A"><span>Un accidente con una nave alienígena</span></label>
+<label class="answer"><input type="radio" name="q2" value="B"><span>Un experimento de Sensei que le dio todos sus poderes</span></label>
+<label class="answer"><input type="radio" name="q2" value="C"><span>Su sistema y lo que fue aprendiendo sobre sus poderes</span></label>
+<label class="answer"><input type="radio" name="q2" value="D"><span>Un entrenamiento militar secreto</span></label>
+</div><div class="feedback"></div></div>
+
+<div class="question" data-answer="A" data-explanation="La tecnología de DL es propia y funciona de acuerdo con reglas específicas de su universo.">
+<div class="qtop"><span class="num">03</span> TECNOLOGÍA</div><h2>¿Cómo se describe la tecnología propia de DL?</h2>
+<div class="answers">
+<label class="answer"><input type="radio" name="q3" value="A"><span>Tiene reglas específicas</span></label>
+<label class="answer"><input type="radio" name="q3" value="B"><span>Es tecnología común que cualquiera puede replicar</span></label>
+<label class="answer"><input type="radio" name="q3" value="C"><span>Depende exclusivamente de magia antigua</span></label>
+<label class="answer"><input type="radio" name="q3" value="D"><span>Solo funciona dentro de la KingFlyer</span></label>
+</div><div class="feedback"></div></div>
+
+<div class="question" data-answer="D" data-explanation="Entre las capacidades de DL están levitar y volar.">
+<div class="qtop"><span class="num">04</span> HABILIDADES</div><h2>¿Cuál de estas capacidades forma parte de los poderes conocidos de DL?</h2>
+<div class="answers">
+<label class="answer"><input type="radio" name="q4" value="A"><span>Respirar bajo el agua como única habilidad</span></label>
+<label class="answer"><input type="radio" name="q4" value="B"><span>Detener el tiempo únicamente con un reloj</span></label>
+<label class="answer"><input type="radio" name="q4" value="C"><span>Convertirse permanentemente en una máquina</span></label>
+<label class="answer"><input type="radio" name="q4" value="D"><span>Levitar y volar</span></label>
+</div><div class="feedback"></div></div>
+
+<div class="question" data-answer="B" data-explanation="DL puede hackear pantallas como parte de sus habilidades conocidas.">
+<div class="qtop"><span class="num">05</span> CONTROL DIGITAL</div><h2>¿Qué puede hacer DL con las pantallas?</h2>
+<div class="answers">
+<label class="answer"><input type="radio" name="q5" value="A"><span>Solo cambiar su brillo manualmente</span></label>
+<label class="answer"><input type="radio" name="q5" value="B"><span>Hackearlas</span></label>
+<label class="answer"><input type="radio" name="q5" value="C"><span>Usarlas únicamente como espejos</span></label>
+<label class="answer"><input type="radio" name="q5" value="D"><span>Controlarlas solo si están desconectadas</span></label>
+</div><div class="feedback"></div></div>
+
+<div class="question" data-answer="C" data-explanation="El control de la realidad es una de las capacidades establecidas para DL.">
+<div class="qtop"><span class="num">06</span> PODERES</div><h2>¿Qué otra capacidad importante se le atribuye a DL?</h2>
+<div class="answers">
+<label class="answer"><input type="radio" name="q6" value="A"><span>Controlar exclusivamente el clima</span></label>
+<label class="answer"><input type="radio" name="q6" value="B"><span>Copiar únicamente voces humanas</span></label>
+<label class="answer"><input type="radio" name="q6" value="C"><span>Controlar la realidad</span></label>
+<label class="answer"><input type="radio" name="q6" value="D"><span>Leer pensamientos solo mediante una pantalla</span></label>
+</div><div class="feedback"></div></div>
+
+<div class="question" data-answer="A" data-explanation="El alcance de los poderes de DL se describe como prácticamente sin límite establecido.">
+<div class="qtop"><span class="num">07</span> ALCANCE</div><h2>¿Cómo se describe, en términos generales, el alcance de los poderes de DL?</h2>
+<div class="answers">
+<label class="answer"><input type="radio" name="q7" value="A"><span>Prácticamente sin límite establecido</span></label>
+<label class="answer"><input type="radio" name="q7" value="B"><span>Limitado a manejar dispositivos pequeños</span></label>
+<label class="answer"><input type="radio" name="q7" value="C"><span>Disponible solo durante unos segundos al día</span></label>
+<label class="answer"><input type="radio" name="q7" value="D"><span>Limitado a las habilidades físicas humanas normales</span></label>
+</div><div class="feedback"></div></div>
+
+<div class="actions">
+<button class="primary" type="submit" id="submitBtn">⚡ Evaluar cuestionario</button>
+<button class="secondary" type="button" id="resetBtn">Reiniciar</button>
+</div>
+</form>
+<section class="result" id="result" aria-live="polite">
+  <div class="kicker">REPORTE DE EVALUACIÓN</div>
+  <div class="score" id="score">0/7</div>
+  <h2 id="grade"></h2>
+  <p id="resultText"></p>
+</section>
+<footer>DEADLORD OS // Test centrado exclusivamente en DL</footer>
+</main>
+<script>
+const form=document.getElementById('quiz');
+const questions=[...document.querySelectorAll('.question')];
+const progress=document.getElementById('progress');
+const progressLabel=document.getElementById('progressLabel');
+const result=document.getElementById('result');
+const submitBtn=document.getElementById('submitBtn');
+function updateProgress(){
+  const answered=questions.filter(q=>q.querySelector('input:checked')).length;
+  progress.style.width=(answered/questions.length*100)+'%';
+  progressLabel.textContent=`${answered} de ${questions.length} respondidas`;
+}
+form.addEventListener('change',updateProgress);
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  let score=0;
+  questions.forEach(q=>{
+    const chosen=q.querySelector('input:checked');
+    const correct=chosen && chosen.value===q.dataset.answer;
+    q.classList.remove('correct','incorrect');
+    q.classList.add(correct?'correct':'incorrect');
+    const feedback=q.querySelector('.feedback');
+    if(correct){score++;feedback.textContent='✓ '+q.dataset.explanation;}
+    else{
+      const correctLabel=q.querySelector(`input[value="${q.dataset.answer}"]`).parentElement.querySelector('span').textContent;
+      feedback.textContent=(chosen?'✕ Tu respuesta no coincide. ':'✕ Sin responder. ')+`Respuesta esperada: ${correctLabel}. `+q.dataset.explanation;
+    }
+    q.querySelectorAll('input').forEach(input=>input.disabled=true);
+  });
+  document.getElementById('score').textContent=`${score}/${questions.length}`;
+  const pct=score/questions.length;
+  document.getElementById('grade').textContent=pct===1?'¡Acceso total autorizado!':pct>=.8?'Excelente dominio del lore':pct>=.6?'Buen avance, agente DL':'Entrenamiento adicional recomendado';
+  document.getElementById('resultText').textContent=`Obtuviste ${Math.round(pct*100)}%. Revisa las explicaciones para repasar el canon establecido de Dead Lord.`;
+  result.classList.add('show');
+  submitBtn.disabled=true;
+  result.scrollIntoView({behavior:'smooth',block:'center'});
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  form.reset();
+  questions.forEach(q=>{
+    q.classList.remove('correct','incorrect');
+    q.querySelectorAll('input').forEach(input=>input.disabled=false);
+    q.querySelector('.feedback').textContent='';
+  });
+  result.classList.remove('show');
+  submitBtn.disabled=false;
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+updateProgress();
+</script>
+</body>
+</html>
